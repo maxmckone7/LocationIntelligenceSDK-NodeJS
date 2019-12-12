@@ -1,0 +1,31 @@
+{
+  "name": "pb-locateapi-client",
+  "version": "8.0.0",
+  "description": "NodeJS client for pb-locateapi-client",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/git_user_id/GIT_REPO_ID.git"
+  },
+  "main": "api.js",
+  "scripts": {
+    "clean": "rm -Rf node_modules/ typings/ *.js",
+    "build": "tsc",
+    "test": "npm run build && node client.js"
+  },
+  "author": "Swagger Codegen Contributors",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@types/node": "^10.12.10",
+    "bluebird": "^3.3.5",
+    "request": "^2.72.0",
+    "moment": "^2.22.2"
+  },
+  "devDependencies": {
+    "typescript": "^2.0.0",
+    "typedoc": "^0.13.0"
+  },
+  "bugs": {
+    "url": "https://github.com/git_user_id/GIT_REPO_ID/issues"
+  },
+  "homepage": "https://github.com/PitneyBowes/LocationIntelligenceSDK-NodeJS/blob/master/README.md"
+}

@@ -4,7 +4,7 @@
   "description": "NodeJS client for pb-locateapi-client",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/git_user_id/GIT_REPO_ID.git"
+    "url": "git@github.com:PitneyBowes/LocationIntelligenceSDK-NodeJS.git"
   },
   "main": "api.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "typedoc": "^0.13.0"
   },
   "bugs": {
-    "url": "https://github.com/git_user_id/GIT_REPO_ID/issues"
+    "url": "https://github.com/PitneyBowes/LocationIntelligenceSDK-NodeJS/issues"
   },
   "homepage": "https://github.com/PitneyBowes/LocationIntelligenceSDK-NodeJS/blob/master/README.md"
 }

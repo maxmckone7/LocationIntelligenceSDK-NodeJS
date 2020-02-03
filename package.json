@@ -1,6 +1,6 @@
 {
   "name": "pb-locateapi-client",
-  "version": "8.0.1",
+  "version": "8.0.2",
   "description": "NodeJS client for pb-locateapi-client",
   "repository": {
     "type": "git",

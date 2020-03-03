@@ -1,31 +1,28 @@
 {
-  "name": "pb-locateapi-client",
-  "version": "8.0.2",
-  "description": "NodeJS client for pb-locateapi-client",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:PitneyBowes/LocationIntelligenceSDK-NodeJS.git"
-  },
-  "main": "api.js",
-  "scripts": {
-    "clean": "rm -Rf node_modules/ typings/ *.js",
-    "build": "tsc",
-    "test": "npm run build && node client.js"
-  },
-  "author": "Swagger Codegen Contributors",
-  "license": "Apache-2.0",
-  "dependencies": {
-    "@types/node": "^10.12.10",
-    "bluebird": "^3.3.5",
-    "request": "^2.72.0",
-    "moment": "^2.22.2"
-  },
-  "devDependencies": {
-    "typedoc": "^0.16.9",
-    "typescript": "^2.0.0"
-  },
+    "name": "pb-locateapi-client",
+    "version": "8.5.0",
+    "description": "NodeJS client for pb-locateapi-client",
+    "repository": "GIT_USER_ID/GIT_REPO_ID",
+    "main": "api.js",
+    "scripts": {
+        "clean": "rm -Rf node_modules/ typings/ *.js",
+        "build": "tsc",
+        "test": "npm run build && node client.js"
+    },
+    "author": "Swagger Codegen Contributors",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "@types/node": "^10.12.10",
+        "bluebird": "^3.3.5",
+        "request": "^2.72.0",
+        "moment": "^2.22.2"
+    },
+    "devDependencies": {
+        "typedoc": "^0.16.11",
+        "typescript": "^2.0.0"
+    },
   "bugs": {
     "url": "https://github.com/PitneyBowes/LocationIntelligenceSDK-NodeJS/issues"
   },
   "homepage": "https://github.com/PitneyBowes/LocationIntelligenceSDK-NodeJS/blob/master/README.md"
-}
+ }

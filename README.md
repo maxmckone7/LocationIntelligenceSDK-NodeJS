@@ -25,7 +25,7 @@
 
 * [GeoLife](https://locate.pitneybowes.com/geolife) : Returns household demographics and lifestyle characteristics with the input of an address or location coordinate. Useful for data analysts and commercial and corporate developers building mobile apps and services.
 
-* [GeoProperty](https://locate.pitneybowes.com/geoproperty)::  Property Details. Capture property details for analysis and planning. The GeoProperty API returns extensive property attributes with the input of address or PB key. Critical for any property investment, insurance or risk analysis and mitigation.
+* [GeoProperty](https://locate.pitneybowes.com/geoproperty)::  Property Details. Capture property details for analysis and planning. The GeoProperty API returns extensive property attributes with the input of address. Critical for any property investment, insurance or risk analysis and mitigation.
 
 * [GeoTax](https://locate.pitneybowes.com/geotax): Returns local tax rates with the input of a location coordinate or an address. Critical for any billing, commerce, payment, or payroll application or service.
 
@@ -37,7 +37,7 @@
 
 * [GeoPost](http://locate.pitneybowes.com/geopost): Accurate Postal Routing. The GeoPost API accepts an address or multiple addresses as inputs and returns US postal routing information including residential, commercial or PO Box delivery destinations. Critical for any direct mail marketing campaign.
 
-* [GeoIdentity](http://locate.pitneybowes.com/geoidentity): GeoIdentity. Powerful, local socio-economic & affinity insights about your customer. Enrich billing and/or shipping addresses with rich localized Identity profiles, demographics, lifestyle segmentations, neighborhood names, property ownership & values, and social affinity insights. The GeoIdentity API returns all these data with the input of an Address or pbKeyTM. Useful for enhancing & enriching any Retail or Commerce application, business process, or workflow.
+* [GeoIdentity](http://locate.pitneybowes.com/geoidentity): Powerful, local socio-economic & affinity insights about your customer. Enrich shipping addresses with rich, localized Identity profiles, demographics, lifestyle segmentations, neighborhood names, property ownership & values, and social affinity insights. The GeoIdentity API returns all these data with the input of a Physical Address, Email Address, or Twitter handle. Useful for enhancing & enriching a wide variety of applications, business processes, or workflows.
 
 * [GeoStreets](https://locate.pitneybowes.com/geostreets): Enrich your applications, business processes, and workflows with global street information including nearest intersections and more. GeoStreets accepts an address or location and returns nearest intersection information. Useful for enriching your data and/or analytics processes with footfall potential.
 

@@ -51,6 +51,8 @@ export class oAuthCredInfo {
 export class AHJ {
     'ahjType': string;
     'ahjId': string;
+    'type': string;
+    'fccId': string;
     'agency': string;
     'phone': string;
     'comments': string;
@@ -406,6 +408,7 @@ export class ContactDetails {
 
 export class ContactPerson {
     'title': string;
+    'fullName': string;
     'prefix': string;
     'firstName': string;
     'lastName': string;
@@ -1059,20 +1062,6 @@ export class GeoPropertyAddressRequest {
     'addresses': Array<CommonAddress>;
 }
 
-export class GeoPropertyPBKeyRequest {
-    'pbkeys': Array<PbKey>;
-}
-
-export class GeoPropertyPBKeyResponse {
-    'objectId': string;
-    'category': string;
-    'individualValueVariable': Array<IndividualValueVariable>;
-}
-
-export class GeoPropertyPBKeyResponses {
-    'propertyAttributes': Array<GeoPropertyPBKeyResponse>;
-}
-
 export class GeoPropertyResponse {
     'objectId': string;
     'category': string;
@@ -1362,6 +1351,7 @@ export class IndexVariable {
     'score': string;
     'category': string;
     'percentile': string;
+    'stateScore': string;
 }
 
 export class IndividualValueVariable {
@@ -1591,16 +1581,6 @@ export class POIBoundaryLocationRequest {
 export class POIBoundaryLocations {
     'geometry': Geometry;
     'objectId': string;
-}
-
-export class POIBoundaryPBKey {
-    'objectId': string;
-    'pbKey': string;
-}
-
-export class POIBoundaryPBKeyRequest {
-    'pbkeys': Array<POIBoundaryPBKey>;
-    'preferences': PoiBoundaryPreferences;
 }
 
 export class POIBoundaryResponse {
@@ -2145,6 +2125,8 @@ export class SicMetadata {
 export class SiteDetails {
     'phone': string;
     'fax': string;
+    'contactName': string;
+    'email': string;
     'address': MatchedAddress;
 }
 
@@ -4478,103 +4460,6 @@ export class LIAPIGeoIdentityServiceApi {
     });*/
     }
     /**
-     * Gets GeoIdentityResponse
-     * Gets GeoIdentityResponse
-     * @param pbKey PB specific unique key for each address
-     * @param givenName This filters all the associated identities of address by given Name
-     * @param familyName This filters all the associated identities of address by family Name
-     * @param confidence To adjust quality threshold of data returned. Default is HIGH
-     * @param maxCandidates Number of identities returned in response
-     * @param theme theme parameter for filtering results
-     * @param filter filter params
-     */
-    public getIdentityByPBKey (pbKey: string, givenName?: string, familyName?: string, confidence?: string, maxCandidates?: string, theme?: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: GeoIdentityResponse;  }> {
-        const localVarPath = this.basePath + '/geoidentity/v1/identity/bypbkey';
-        let queryParameters: any = {};
-        let headerParams: any =  this.defaultHeaders;
-        let formParams: any = {};
-
-
-        // verify required parameter 'pbKey' is not null or undefined
-        if (pbKey === null || pbKey === undefined) {
-             return Promise.reject({ response: null, body: {errors:[{"errorCode":"Validation_Error",errorDescription:"Required parameter pbKey was null or undefined when calling getIdentityByPBKey."}]}})
-        }
-
-        if (pbKey !== undefined) {
-            queryParameters['pbKey'] = pbKey;
-        }
-
-        if (givenName !== undefined) {
-            queryParameters['givenName'] = givenName;
-        }
-
-        if (familyName !== undefined) {
-            queryParameters['familyName'] = familyName;
-        }
-
-        if (confidence !== undefined) {
-            queryParameters['confidence'] = confidence;
-        }
-
-        if (maxCandidates !== undefined) {
-            queryParameters['maxCandidates'] = maxCandidates;
-        }
-
-        if (theme !== undefined) {
-            queryParameters['theme'] = theme;
-        }
-
-        if (filter !== undefined) {
-            queryParameters['filter'] = filter;
-        }
-
-        let useFormData = false;
-
-        let requestOptions: request.Options = {
-            method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-
-   //return this.authentications.oAuth2Password.applyToRequest()
-    //.then((data)=>{
-
-
-       // this.authentications.default.applyToRequest(requestOptions);
-        requestOptions.headers = {"authorization":"Bearer " + this.oAuthCred.access_token};
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
-            } else {
-                requestOptions.form = formParams;
-            }
-        }
-
-        return new Promise<{ response: http.IncomingMessage; body: GeoIdentityResponse;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject(response);
-                    }
-                }
-            });
-        });
-
-
-   /* })
-    .catch((error) =>{
-    return Promise.reject(error);
-    });*/
-    }
-    /**
      * Gets Identity
      * Gets Identity
      * @param twitter Twitter handle of the identity.
@@ -4899,93 +4784,6 @@ export class LIAPIGeoLifeServiceApi {
     });*/
     }
     /**
-     * Demographics By PBKey.
-     * Provides the demographic details for a specified PB Key. GeoLife &#39;bypbkey&#39; service accepts pbkey as an input to return a specific population segment&#39;s age group, ethnicity, income, purchasing behaviour, commuter patterns and more.
-     * @param pbKey free form text
-     * @param profile Retrieves the sorted demographic data on the basis of pre-defined profiles that can display the top 3 or top 5 results (by address) either in ascending or descending order.Allowed values Top5Ascending,Top5Descending,Top3Ascending,Top3Descending
-     * @param filter The &#39;filter&#39; parameter retrieves the demographic data based upon specified input themes.
-     * @param valueFormat The &#39;valueFormat&#39; parameter is applicable for few ranged variables where percent &amp; count both are available and filter response based on the input value.
-     * @param variableLevel The &#39;variableLevel&#39; retrieves demographic facts in response based on the input value
-     */
-    public getDemographicsByPBKey (pbKey: string, profile?: string, filter?: string, valueFormat?: string, variableLevel?: string) : Promise<{ response: http.IncomingMessage; body: DemographicsV2;  }> {
-        const localVarPath = this.basePath + '/geolife/v2/demographics/bypbkey';
-        let queryParameters: any = {};
-        let headerParams: any =  this.defaultHeaders;
-        let formParams: any = {};
-
-
-        // verify required parameter 'pbKey' is not null or undefined
-        if (pbKey === null || pbKey === undefined) {
-             return Promise.reject({ response: null, body: {errors:[{"errorCode":"Validation_Error",errorDescription:"Required parameter pbKey was null or undefined when calling getDemographicsByPBKey."}]}})
-        }
-
-        if (pbKey !== undefined) {
-            queryParameters['pbKey'] = pbKey;
-        }
-
-        if (profile !== undefined) {
-            queryParameters['profile'] = profile;
-        }
-
-        if (filter !== undefined) {
-            queryParameters['filter'] = filter;
-        }
-
-        if (valueFormat !== undefined) {
-            queryParameters['valueFormat'] = valueFormat;
-        }
-
-        if (variableLevel !== undefined) {
-            queryParameters['variableLevel'] = variableLevel;
-        }
-
-        let useFormData = false;
-
-        let requestOptions: request.Options = {
-            method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-
-   //return this.authentications.oAuth2Password.applyToRequest()
-    //.then((data)=>{
-
-
-       // this.authentications.default.applyToRequest(requestOptions);
-        requestOptions.headers = {"authorization":"Bearer " + this.oAuthCred.access_token};
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
-            } else {
-                requestOptions.form = formParams;
-            }
-        }
-
-        return new Promise<{ response: http.IncomingMessage; body: DemographicsV2;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject(response);
-                    }
-                }
-            });
-        });
-
-
-   /* })
-    .catch((error) =>{
-    return Promise.reject(error);
-    });*/
-    }
-    /**
      * Segmentation By Address.
      * Provides the segmentation details around a specified address. GeoLife &#39;Segmentation by Address&#39; service accepts address as an input to return the lifestyle characteristics of households in terms of their family status, children characteristics, income behaviors, financial preferences and interests.
      * @param address The address to be searched.
@@ -5086,73 +4884,6 @@ export class LIAPIGeoLifeServiceApi {
 
         if (latitude !== undefined) {
             queryParameters['latitude'] = latitude;
-        }
-
-        let useFormData = false;
-
-        let requestOptions: request.Options = {
-            method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-
-   //return this.authentications.oAuth2Password.applyToRequest()
-    //.then((data)=>{
-
-
-       // this.authentications.default.applyToRequest(requestOptions);
-        requestOptions.headers = {"authorization":"Bearer " + this.oAuthCred.access_token};
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
-            } else {
-                requestOptions.form = formParams;
-            }
-        }
-
-        return new Promise<{ response: http.IncomingMessage; body: Segmentation;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject(response);
-                    }
-                }
-            });
-        });
-
-
-   /* })
-    .catch((error) =>{
-    return Promise.reject(error);
-    });*/
-    }
-    /**
-     * Segmentation By PB Key.
-     * Provides the segmentation details for a PB Key. GeoLife &#39;segmentation bypbkey&#39; service accepts free form text PB Key as an input to return the lifestyle characteristics of households in terms of their family status, children characteristics, income behaviors, financial preferences and interests.
-     * @param pbKey free form text
-     */
-    public getSegmentationByPBKey (pbKey: string) : Promise<{ response: http.IncomingMessage; body: Segmentation;  }> {
-        const localVarPath = this.basePath + '/geolife/v1/segmentation/bypbkey';
-        let queryParameters: any = {};
-        let headerParams: any =  this.defaultHeaders;
-        let formParams: any = {};
-
-
-        // verify required parameter 'pbKey' is not null or undefined
-        if (pbKey === null || pbKey === undefined) {
-             return Promise.reject({ response: null, body: {errors:[{"errorCode":"Validation_Error",errorDescription:"Required parameter pbKey was null or undefined when calling getSegmentationByPBKey."}]}})
-        }
-
-        if (pbKey !== undefined) {
-            queryParameters['pbKey'] = pbKey;
         }
 
         let useFormData = false;
@@ -5839,132 +5570,6 @@ export class LIAPIGeoPropertyServiceApi {
     });*/
     }
     /**
-     * Gets GeoPropertyResponse
-     * Gets GeoPropertyResponse
-     * @param pbKey free form text
-     */
-    public getGeoPropertyByPBKey (pbKey: string) : Promise<{ response: http.IncomingMessage; body: GeoPropertyPBKeyResponse;  }> {
-        const localVarPath = this.basePath + '/geoproperty/v1/all/attributes/bypbkey';
-        let queryParameters: any = {};
-        let headerParams: any =  this.defaultHeaders;
-        let formParams: any = {};
-
-
-        // verify required parameter 'pbKey' is not null or undefined
-        if (pbKey === null || pbKey === undefined) {
-             return Promise.reject({ response: null, body: {errors:[{"errorCode":"Validation_Error",errorDescription:"Required parameter pbKey was null or undefined when calling getGeoPropertyByPBKey."}]}})
-        }
-
-        if (pbKey !== undefined) {
-            queryParameters['pbKey'] = pbKey;
-        }
-
-        let useFormData = false;
-
-        let requestOptions: request.Options = {
-            method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-
-   //return this.authentications.oAuth2Password.applyToRequest()
-    //.then((data)=>{
-
-
-       // this.authentications.default.applyToRequest(requestOptions);
-        requestOptions.headers = {"authorization":"Bearer " + this.oAuthCred.access_token};
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
-            } else {
-                requestOptions.form = formParams;
-            }
-        }
-
-        return new Promise<{ response: http.IncomingMessage; body: GeoPropertyPBKeyResponse;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject(response);
-                    }
-                }
-            });
-        });
-
-
-   /* })
-    .catch((error) =>{
-    return Promise.reject(error);
-    });*/
-    }
-    /**
-     * Gets GeoPropertyResponses
-     * Gets GeoPropertyResponses
-     * @param body 
-     */
-    public getGeoPropertyByPBKeyBatch (body?: GeoPropertyPBKeyRequest) : Promise<{ response: http.IncomingMessage; body: GeoPropertyPBKeyResponses;  }> {
-        const localVarPath = this.basePath + '/geoproperty/v1/all/attributes/bypbkey';
-        let queryParameters: any = {};
-        let headerParams: any =  this.defaultHeaders;
-        let formParams: any = {};
-
-
-        let useFormData = false;
-
-        let requestOptions: request.Options = {
-            method: 'POST',
-            qs: queryParameters,
-            headers: headerParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: body,
-        };
-
-
-   //return this.authentications.oAuth2Password.applyToRequest()
-    //.then((data)=>{
-
-
-       // this.authentications.default.applyToRequest(requestOptions);
-        requestOptions.headers = {"authorization":"Bearer " + this.oAuthCred.access_token};
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
-            } else {
-                requestOptions.form = formParams;
-            }
-        }
-
-        return new Promise<{ response: http.IncomingMessage; body: GeoPropertyPBKeyResponses;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject(response);
-                    }
-                }
-            });
-        });
-
-
-   /* })
-    .catch((error) =>{
-    return Promise.reject(error);
-    });*/
-    }
-    /**
      * Gets ParcelBoundary
      * Gets ParcelBoundary
      * @param address free form address text
@@ -6105,71 +5710,6 @@ export class LIAPIGeoPropertyServiceApi {
     });*/
     }
     /**
-     * Gets ParcelBoundary
-     * Gets ParcelBoundary
-     * @param pbKey PB specific unique key for each address
-     * @param accept 
-     */
-    public getParcelBoundaryByPBKey (pbKey: string, accept?: string) : Promise<{ response: http.IncomingMessage; body: ParcelBoundary;  }> {
-        const localVarPath = this.basePath + '/geoproperty/v1/parcelboundary/bypbkey';
-        let queryParameters: any = {};
-        let headerParams: any =  this.defaultHeaders;
-        let formParams: any = {};
-
-
-        // verify required parameter 'pbKey' is not null or undefined
-        if (pbKey === null || pbKey === undefined) {
-             return Promise.reject({ response: null, body: {errors:[{"errorCode":"Validation_Error",errorDescription:"Required parameter pbKey was null or undefined when calling getParcelBoundaryByPBKey."}]}})
-        }
-
-        if (pbKey !== undefined) {
-            queryParameters['pbKey'] = pbKey;
-        }
-
-        headerParams['Accept'] = accept;
-
-        let useFormData = false;
-
-        let requestOptions: request.Options = {
-            method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-       // this.authentications.default.applyToRequest(requestOptions);
-        requestOptions.headers = {"authorization":"Bearer " + this.oAuthCred.access_token};
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
-            } else {
-                requestOptions.form = formParams;
-            }
-        }
-
-        return new Promise<{ response: http.IncomingMessage; body: ParcelBoundary;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject(response);
-                    }
-                }
-            });
-        });
-
-
-   /* })
-    .catch((error) =>{
-    return Promise.reject(error);
-    });*/
-    }
-    /**
      * Search Nearby Schools by Address
      * Search Nearby Schools by Address
      * @param address free form address text
@@ -6202,143 +5742,6 @@ export class LIAPIGeoPropertyServiceApi {
 
         if (address !== undefined) {
             queryParameters['address'] = address;
-        }
-
-        if (edLevel !== undefined) {
-            queryParameters['edLevel'] = edLevel;
-        }
-
-        if (schoolType !== undefined) {
-            queryParameters['schoolType'] = schoolType;
-        }
-
-        if (schoolSubType !== undefined) {
-            queryParameters['schoolSubType'] = schoolSubType;
-        }
-
-        if (gender !== undefined) {
-            queryParameters['gender'] = gender;
-        }
-
-        if (assignedSchoolsOnly !== undefined) {
-            queryParameters['assignedSchoolsOnly'] = assignedSchoolsOnly;
-        }
-
-        if (districtSchoolsOnly !== undefined) {
-            queryParameters['districtSchoolsOnly'] = districtSchoolsOnly;
-        }
-
-        if (searchRadius !== undefined) {
-            queryParameters['searchRadius'] = searchRadius;
-        }
-
-        if (searchRadiusUnit !== undefined) {
-            queryParameters['searchRadiusUnit'] = searchRadiusUnit;
-        }
-
-        if (travelTime !== undefined) {
-            queryParameters['travelTime'] = travelTime;
-        }
-
-        if (travelTimeUnit !== undefined) {
-            queryParameters['travelTimeUnit'] = travelTimeUnit;
-        }
-
-        if (travelDistance !== undefined) {
-            queryParameters['travelDistance'] = travelDistance;
-        }
-
-        if (travelDistanceUnit !== undefined) {
-            queryParameters['travelDistanceUnit'] = travelDistanceUnit;
-        }
-
-        if (travelMode !== undefined) {
-            queryParameters['travelMode'] = travelMode;
-        }
-
-        if (maxCandidates !== undefined) {
-            queryParameters['maxCandidates'] = maxCandidates;
-        }
-
-        let useFormData = false;
-
-        let requestOptions: request.Options = {
-            method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-
-   //return this.authentications.oAuth2Password.applyToRequest()
-    //.then((data)=>{
-
-
-       // this.authentications.default.applyToRequest(requestOptions);
-        requestOptions.headers = {"authorization":"Bearer " + this.oAuthCred.access_token};
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
-            } else {
-                requestOptions.form = formParams;
-            }
-        }
-
-        return new Promise<{ response: http.IncomingMessage; body: SchoolsNearByResponse;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject(response);
-                    }
-                }
-            });
-        });
-
-
-   /* })
-    .catch((error) =>{
-    return Promise.reject(error);
-    });*/
-    }
-    /**
-     * Search Nearby Schools by PBKey
-     * Search Nearby Schools by PBKey
-     * @param pbKey free form text
-     * @param edLevel Single digit code for education level applicable values are P -&gt; primary, M -&gt; Middle, H -&gt; High, O -&gt; Mixed Grades for public school type andE -&gt; Elementary , S -&gt; Secondary , O -&gt; Others mixed grades for private schools 
-     * @param schoolType Single digit code for schoolTypes applicable values are PRI and PUB
-     * @param schoolSubType Single digit code for schoolSubType Applicable values are C, M, A, R, I, L, P, V, U, S (i.e. Charter, Magnet, Alternative, Regular, Indian, Military, Reportable Program, Vocational, Unknown, Special Education)
-     * @param gender Single digit code for gender Applicable values are C, F, M (Coed, All Females, All Males)
-     * @param assignedSchoolsOnly Single digit code for assignedSchoolOnly applicable values are  Y/N 
-     * @param districtSchoolsOnly Single digit code for districtSchoolOnly applicable values are Y/N 
-     * @param searchRadius Search Radius within which schools are searched
-     * @param searchRadiusUnit Search Radius unit applicable values are feet,kilometers,miles,meters
-     * @param travelTime Travel Time based on ‘travelMode’ within which schools are searched.
-     * @param travelTimeUnit Travel Time unit applicable values are minutes,hours,seconds,milliseconds 
-     * @param travelDistance Travel Distance based on ‘travelMode’ within which schools are searched.
-     * @param travelDistanceUnit Travel distanceUnit applicable values are feet,kilometers,miles,meters
-     * @param travelMode Travel mode Required when travelDistance or travelTime is specified. Accepted values are walking,driving
-     * @param maxCandidates Max result to search 
-     */
-    public getSchoolsNearByUsingPBKey (pbKey: string, edLevel?: string, schoolType?: string, schoolSubType?: string, gender?: string, assignedSchoolsOnly?: string, districtSchoolsOnly?: string, searchRadius?: string, searchRadiusUnit?: string, travelTime?: string, travelTimeUnit?: string, travelDistance?: string, travelDistanceUnit?: string, travelMode?: string, maxCandidates?: string) : Promise<{ response: http.IncomingMessage; body: SchoolsNearByResponse;  }> {
-        const localVarPath = this.basePath + '/geoproperty/v1/school/bypbkey';
-        let queryParameters: any = {};
-        let headerParams: any =  this.defaultHeaders;
-        let formParams: any = {};
-
-
-        // verify required parameter 'pbKey' is not null or undefined
-        if (pbKey === null || pbKey === undefined) {
-             return Promise.reject({ response: null, body: {errors:[{"errorCode":"Validation_Error",errorDescription:"Required parameter pbKey was null or undefined when calling getSchoolsNearByUsingPBKey."}]}})
-        }
-
-        if (pbKey !== undefined) {
-            queryParameters['pbKey'] = pbKey;
         }
 
         if (edLevel !== undefined) {
@@ -11330,147 +10733,6 @@ export class LIAPIGeoZoneServiceApi {
      */
     public getPOIBoundaryByLocationBatch (body?: POIBoundaryLocationRequest) : Promise<{ response: http.IncomingMessage; body: POIBoundaryResponse;  }> {
         const localVarPath = this.basePath + '/geozone/v1/poiboundary/bylocation';
-        let queryParameters: any = {};
-        let headerParams: any =  this.defaultHeaders;
-        let formParams: any = {};
-
-
-        let useFormData = false;
-
-        let requestOptions: request.Options = {
-            method: 'POST',
-            qs: queryParameters,
-            headers: headerParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: body,
-        };
-
-
-   //return this.authentications.oAuth2Password.applyToRequest()
-    //.then((data)=>{
-
-
-       // this.authentications.default.applyToRequest(requestOptions);
-        requestOptions.headers = {"authorization":"Bearer " + this.oAuthCred.access_token};
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
-            } else {
-                requestOptions.form = formParams;
-            }
-        }
-
-        return new Promise<{ response: http.IncomingMessage; body: POIBoundaryResponse;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject(response);
-                    }
-                }
-            });
-        });
-
-
-   /* })
-    .catch((error) =>{
-    return Promise.reject(error);
-    });*/
-    }
-    /**
-     * Gets Point of Interests Boundary by PBKey
-     * Gets Point of Interests Boundary by PBKey
-     * @param pbKey PBKey for which POI Boundary is requested
-     * @param categoryCode Specific Category/Categories Codes for the desired POIs. Accepts a mix of 4 digit (Top Category), 6 digit (Second-Level Category) and 11 digit (Low-Level Category) Category Codes.
-     * @param sicCode Specify starting digits or full sic code to filter the response
-     * @param naicsCode Will accept naicsCode to filter POIs in results. Max 10 allowed.
-     */
-    public getPOIBoundaryByPBKey (pbKey: string, categoryCode?: string, sicCode?: string, naicsCode?: string) : Promise<{ response: http.IncomingMessage; body: PoiBoundary;  }> {
-        const localVarPath = this.basePath + '/geozone/v1/poiboundary/bypbkey';
-        let queryParameters: any = {};
-        let headerParams: any =  this.defaultHeaders;
-        let formParams: any = {};
-
-
-        // verify required parameter 'pbKey' is not null or undefined
-        if (pbKey === null || pbKey === undefined) {
-             return Promise.reject({ response: null, body: {errors:[{"errorCode":"Validation_Error",errorDescription:"Required parameter pbKey was null or undefined when calling getPOIBoundaryByPBKey."}]}})
-        }
-
-        if (pbKey !== undefined) {
-            queryParameters['pbKey'] = pbKey;
-        }
-
-        if (categoryCode !== undefined) {
-            queryParameters['categoryCode'] = categoryCode;
-        }
-
-        if (sicCode !== undefined) {
-            queryParameters['sicCode'] = sicCode;
-        }
-
-        if (naicsCode !== undefined) {
-            queryParameters['naicsCode'] = naicsCode;
-        }
-
-        let useFormData = false;
-
-        let requestOptions: request.Options = {
-            method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-
-   //return this.authentications.oAuth2Password.applyToRequest()
-    //.then((data)=>{
-
-
-       // this.authentications.default.applyToRequest(requestOptions);
-        requestOptions.headers = {"authorization":"Bearer " + this.oAuthCred.access_token};
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
-            } else {
-                requestOptions.form = formParams;
-            }
-        }
-
-        return new Promise<{ response: http.IncomingMessage; body: PoiBoundary;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject(response);
-                    }
-                }
-            });
-        });
-
-
-   /* })
-    .catch((error) =>{
-    return Promise.reject(error);
-    });*/
-    }
-    /**
-     * Batch method for getting Point of Interests Boundary by PBKey
-     * Batch method for getting Point of Interests Boundary by PBKey
-     * @param body 
-     */
-    public getPOIBoundaryByPBKeyBatch (body?: POIBoundaryPBKeyRequest) : Promise<{ response: http.IncomingMessage; body: POIBoundaryResponse;  }> {
-        const localVarPath = this.basePath + '/geozone/v1/poiboundary/bypbkey';
         let queryParameters: any = {};
         let headerParams: any =  this.defaultHeaders;
         let formParams: any = {};

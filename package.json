@@ -18,11 +18,7 @@
         "moment": "^2.22.2"
     },
     "devDependencies": {
-        "typedoc": "^0.16.11",
+        "typedoc": "^0.17.4",
         "typescript": "^2.0.0"
-    },
-  "bugs": {
-    "url": "https://github.com/PitneyBowes/LocationIntelligenceSDK-NodeJS/issues"
-  },
-  "homepage": "https://github.com/PitneyBowes/LocationIntelligenceSDK-NodeJS/blob/master/README.md"
- }
+    }
+}

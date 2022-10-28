@@ -1,4 +1,5 @@
 ![Pitney Bowes](/PitneyBowes_Logo.jpg)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmaxmckone7%2FLocationIntelligenceSDK-NodeJS.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmaxmckone7%2FLocationIntelligenceSDK-NodeJS?ref=badge_shield)
 
 # Pitney Bowes Location Intelligence API
 
@@ -135,3 +136,7 @@ catch (error1) {
 
 
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmaxmckone7%2FLocationIntelligenceSDK-NodeJS.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmaxmckone7%2FLocationIntelligenceSDK-NodeJS?ref=badge_large)
